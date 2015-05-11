@@ -1,0 +1,7 @@
+upgrade:
+  type: "yes"
+#  type: safe
+#  type: full
+#  type: dist
+
+#http://docs.ansible.com/apt_module.html

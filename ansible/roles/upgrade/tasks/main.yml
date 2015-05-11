@@ -1,0 +1,7 @@
+- include_vars: "upgrade.yml"
+  when: ansible_os_family == 'Debian'
+
+- name: Updating apt-get cache, then upgrading with apt-get
+  apt: update_cache=yes
+  apt: upgrade="{{ upgrade['type'] }}"
+

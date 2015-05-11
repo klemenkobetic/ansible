@@ -1,0 +1,8 @@
+---
+- group: name=www-data state=present
+- user: name=ubuntu comment="Ubuntu user created by DLabs" group=www-data
+- user: name=deploy comment="Deploy user created by DLabs" group=www-data
+
+#http://docs.ansible.com/user_module.html
+#http://docs.ansible.com/group_module.html
+

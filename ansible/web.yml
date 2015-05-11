@@ -1,0 +1,9 @@
+- hosts: all
+  sudo: true
+  roles:
+    - ANXS.apt
+  tasks:
+  vars:
+    apt_install_recommends: yes
+    apt_install_suggests: yes
+    apt_autoclean: yes

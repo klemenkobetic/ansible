@@ -1,0 +1,11 @@
+#https://galaxy.ansible.com/list#/roles/529
+ansible-galaxy install ANXS.apt
+
+#https://galaxy.ansible.com/list#/roles/1872
+ansible-galaxy install mauricios.MySQL
+
+#https://galaxy.ansible.com/list#/roles/1683
+ansible-galaxy install webbylab.redis
+
+#https://github.com/Stouts/Stouts.rabbitmq
+ansible-galaxy install Stouts.rabbitmq

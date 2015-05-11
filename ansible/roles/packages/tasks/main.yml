@@ -1,0 +1,33 @@
+---
+- include_vars: "packages.yml"
+  when: ansible_os_family == 'Debian'
+
+- name: Installing basic packages
+  apt: name=curl
+  apt: name=telnet
+  apt: name=mc
+  apt: name=dvtm
+  apt: name=bmon
+  apt: name=htop
+  apt: name=nmon
+  apt: name=ncdu
+  apt: name=iotop
+  apt: name=dos2unix
+  apt: name=traceroute
+  apt: name=nethogs
+  apt: name=openssh-server
+  apt: name=wget
+  apt: name=vim
+  apt: name=sysstat
+  apt: name=rdiff-backup
+  apt: name=ncftp
+  apt: name=gawk
+  apt: name=iperf
+  apt: name=python-software-properties
+  apt: name=chkconfig
+  apt: name=checkinstall
+  apt: name=apt-show-versions
+  apt: name=zsh
+  apt: name=fail2ban
+#  apt: name=
+

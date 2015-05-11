@@ -1,0 +1,11 @@
+---
+- hosts: all
+  sudo: true
+  roles:
+    - upgrade
+    - packages
+    - users
+  vars:
+    tasks:
+      - name: Set hostname
+        hostname: name=database1

@@ -1,0 +1,30 @@
+---
+- hosts: all
+  sudo: true
+  roles:
+    - mysql
+    - upgrade
+    - webbylab.redis
+    - Stouts.rabbitmq    
+  vars:
+    redis_bind: "127.0.0.1"
+    redis_password: dlabs
+    redis_password_present: 1
+
+    rabbitmq_enabled: yes
+    rabbitmq_plugins:                       # Ensure the plugins is installed
+      - rabbitmq_management
+    rabbitmq_users:                         # Ensure the users added
+      - user: admin
+        password: admin
+        vhost: /
+        configure_priv: .*
+        read_priv: .*
+        write_priv: .*
+        tags: administrator
+    rabbitmq_vhosts: []                     # Ensure the vhosts are exists
+    rabbitmq_users_remove:                  # Ensure the users removed
+      - guest
+    tasks:
+      - name: Set hostname
+        hostname: name=database1
