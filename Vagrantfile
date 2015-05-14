@@ -22,9 +22,13 @@ Vagrant.configure("2") do |config|
     end
 
     db.vm.provision "ansible" do |ansDb|
-#      ansDb.verbose = "v"
+      ansDb.verbose = "vvvv"
 #      ansDb.playbook = "./ansible/db.yml"
+#      ansDb.raw_arguments = "--limit @/home/klemen/default.retry"
+      ansDb.sudo = true
+#      ansDb.sudo_user = "root"
       ansDb.playbook = "./ansible/default.yml"
+#      ansDb.extra_vars = { ansible_ssh_user: 'root' }
     end
   end
 end

@@ -1,11 +1,23 @@
 ---
 - hosts: all
   sudo: true
+  pre_tasks:
+    - name: Include variables for galaxy stouts/rabbitmq
+      include_vars: ./galaxy/roles/Stouts.rabbitmq/vars/main.yml
+    - name: Include variables for galaxy stouts/redis
+      include_vars: ./galaxy/roles/Stouts.redis/vars/main.yml
+    - name: Include variables for galaxy nbz4live/phpfpm
+      include_vars: ./galaxy/roles/nbz4live.php-fpm/vars/main.yml
   roles:
     - upgrade
     - packages
     - users
+    - Stouts.rabbitmq    
+    - Stouts.redis
+    - nbz4live.php-fpm
+    - jdauphant.nginx
   vars:
-    tasks:
-      - name: Set hostname
-        hostname: name=database1
+  tasks:
+    - name: Set hostname
+      hostname: name=database1
+  post_tasks:
