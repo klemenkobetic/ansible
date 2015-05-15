@@ -2,12 +2,12 @@
 #### vars folder
 #apt_cache_valid_time: 86400
 #
-php_fpm_pools:
- - name: www
-   user: www-data
-   group: www-data
-   listen: /var/run/php5-fpm.sock
-   chdir: /
+#php_fpm_pools:
+# - name: www
+#   user: www-data
+#   group: www-data
+#   listen: /var/run/php5-fpm.sock
+#   chdir: /
 #
 #php_fpm_pool_defaults:
 #  pm: dynamic
@@ -26,9 +26,9 @@ php_fpm_pools:
 #  delete: no
 #  name: www.conf
 
-php_fpm_default_pool:
-  delete: yes
-  name: www3
+#php_fpm_default_pool:
+#  delete: yes
+#  name: www3
 
 #php_fpm_ini:
 # - option: "engine"
@@ -46,6 +46,11 @@ php_fpm_default_pool:
 #   section: "global"
 #   value: "/var/log/php5-fpm.log"
 
+php_fpm_config:
+ - option: "log_level"
+   section: "global"
+   value: "debug"
+
 #### defaults folder
 #env:
 # RUNLEVEL: 1
@@ -54,7 +59,7 @@ php_fpm_default_pool:
 #php_fpm_config_path: /etc/php5/fpm/php-fpm.conf
 #php_fpm_pool_d: /etc/php5/fpm/pool.d
 
-php_fpm_binary_name: php5-fpm
+#php_fpm_binary_name: php5-fpm
 #php_fpm_service_name: php5-fpm
 #
 #php_fpm_pid_file: /var/run/php5-fpm.pid
