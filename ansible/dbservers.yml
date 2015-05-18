@@ -16,6 +16,8 @@
       include_vars: ./galaxy/roles/f500.dumpall/vars/main.yml
     - name: Include variables for galaxy Stouts/elasticsearch
       include_vars: ./galaxy/roles/Stouts.elasticsearch/vars/main.yml
+    - name: Include variables for galaxy avanov/supervisord
+      include_vars: ./galaxy/roles/avanov.supervisord/vars/main.yml
   roles:
     - hostname
     - upgrade
@@ -27,8 +29,9 @@
     - Stouts.elasticsearch
     - jdauphant.nginx
     - nbz4live.php-fpm
-    - zenoamaro.supervisord
+    - avanov.supervisord
     - f500.dumpall
   tasks:
+    - include: ./galaxy/roles/avanov.supervisord/tasks/main.yml
   vars:
   post_tasks:
