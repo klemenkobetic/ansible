@@ -1,0 +1,13 @@
+supervisord_programs:
+  - name: datadumper
+    # directory to cwd to before exec (def no cwd)
+    directory: "/home/ubuntu/frc/frc-scraper-cli/bin"
+    command: "mono frc-scraper-cli.exe -dump"
+    autostart: "true"
+    autorestart: "true"
+    user: root
+    stdout_logfile: "/var/log/supervisor/frc-datadumper.stdout.log"
+    stderr_logfile: "/var/log/supervisor/frc-datadumper.stderr.log"
+supervisord_groups:
+  - name: g_datadumper
+    programs: "datadumper"

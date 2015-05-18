@@ -1,0 +1,13 @@
+---
+- name: Creates directory for supervisor log
+  file: path=/var/log/frc state=directory owner=root group=root mode=0775
+
+- name: Creates directory for supervisor log
+  file: path=/var/log/frc/datadumper state=directory owner=root group=root mode=0775
+
+- name: Create shortcuts for supervisor
+  file: src=/var/log/supervisor/frc-datadumper.stdout.log dest=/var/log/frc/datadumper/stdout.log owner=root group=root mode=0644 state=link force=yes
+
+- name: Create shortcuts for supervisor
+  file: src=/var/log/supervisor/frc-datadumper.stderr.log dest=/var/log/frc/datadumper/stderr.log owner=root group=root mode=0644 state=link force=yes
+
