@@ -1,0 +1,15 @@
+---
+users:
+  - username: ubuntu
+    name: Ubuntu user made by DLabs
+    uid: 1001
+    groups: ['www-data']
+    ssh_key:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7j16fNgrL4bnBNwUGnvxryJhNdjQTVil8RH1dTcDMfViht4dWLNftHmSIwWd3j7FCBKDuktX/BFZ9Y9wNkELR9Ss7Pqby6zQEuuSSr6N0yyPsx98qSaYykMj0iAIPxmSntJlzDUq6LiNdGSEgd2NXqvX/J6LjQZbkGCX6opFsCKd2gMVBZUFpB4eFqLeeLFSU72JIqIk0t+oUcJIO3+SVkhCvlMr6C31v3UMlkgtzMMS5FRGX8tKSM/lLNAJS1f5RhTlFLDjORAJicu3hAfnxrkDl7bfL0ZUE4IoStz6f5HXO6GZ8RFKh/PvEo6np68sCA+5lTq73zOCt973EtWzJ klemen.kobetic@dlabs.si"
+  - username: deploy
+    name: Ubuntu user made by DLabs
+    uid: 1002
+    groups: ['www-data']
+    ssh_key:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7j16fNgrL4bnBNwUGnvxryJhNdjQTVil8RH1dTcDMfViht4dWLNftHmSIwWd3j7FCBKDuktX/BFZ9Y9wNkELR9Ss7Pqby6zQEuuSSr6N0yyPsx98qSaYykMj0iAIPxmSntJlzDUq6LiNdGSEgd2NXqvX/J6LjQZbkGCX6opFsCKd2gMVBZUFpB4eFqLeeLFSU72JIqIk0t+oUcJIO3+SVkhCvlMr6C31v3UMlkgtzMMS5FRGX8tKSM/lLNAJS1f5RhTlFLDjORAJicu3hAfnxrkDl7bfL0ZUE4IoStz6f5HXO6GZ8RFKh/PvEo6np68sCA+5lTq73zOCt973EtWzJ klemen.kobetic@dlabs.si"
+    
