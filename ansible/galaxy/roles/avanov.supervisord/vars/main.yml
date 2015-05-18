@@ -1,6 +1,5 @@
 supervisord_programs:
   - name: datadumper
-    # directory to cwd to before exec (def no cwd)
     directory: "/home/ubuntu/frc/frc-scraper-cli/bin"
     command: "mono frc-scraper-cli.exe -dump"
     autostart: "true"
@@ -8,6 +7,25 @@ supervisord_programs:
     user: root
     stdout_logfile: "/var/log/supervisor/frc-datadumper.stdout.log"
     stderr_logfile: "/var/log/supervisor/frc-datadumper.stderr.log"
+  - name: rabbitmq
+    command: "/usr/sbin/rabbitmq-server"
+    autostart: "true"
+    autorestart: "true"
+#    user: root
+    stdout_logfile: "/var/log/supervisor/rabbitmq.stdout.log"
+    stderr_logfile: "/var/log/supervisor/rabbitmq.stderr.log"
+  - name: redis
+    command: "/usr/bin/redis-server /etc/redis/redis.conf"
+    autostart: "true"
+    autorestart: "true"
+    user: root
+    stdout_logfile: "/var/log/supervisor/redis.stdout.log"
+    stderr_logfile: "/var/log/supervisor/redis.stderr.log"
+
 supervisord_groups:
   - name: g_datadumper
     programs: "datadumper"
+  - name: g_rabbitmq
+    programs: "rabbitmq"
+  - name: g_redis
+    programs: "redis"
