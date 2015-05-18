@@ -1,4 +1,7 @@
 ---
+- name: Add the OS specific varibles
+  include_vars: "{{ ansible_os_family }}.yml"
+
 - name: Set hostname
   hostname: name={{ hostname }}
 

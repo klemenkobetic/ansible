@@ -1,4 +1,7 @@
 ---
+- name: Add the OS specific varibles
+  include_vars: "{{ ansible_os_family }}.yml"
+
 - group: name=www-data state=present
 - user: name=ubuntu comment="Ubuntu user created by DLabs" group=www-data
 - user: name=deploy comment="Deploy user created by DLabs" group=www-data

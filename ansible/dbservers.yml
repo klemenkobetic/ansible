@@ -2,6 +2,8 @@
 - hosts: dbservers
   sudo: true
   pre_tasks:
+    - name: Include variables for galaxy mivok0/users
+      include_vars: ./galaxy/roles/mivok0.users/vars/main.yml
     - name: Include variables for galaxy stouts/rabbitmq
       include_vars: ./galaxy/roles/Stouts.rabbitmq/vars/main.yml
     - name: Include variables for galaxy stouts/redis
@@ -17,14 +19,15 @@
   roles:
     - hostname
     - upgrade
+    - mivok0.users
     - packages
-    - users
     - Stouts.timezone
     - Stouts.rabbitmq    
     - Stouts.redis
     - Stouts.elasticsearch
     - jdauphant.nginx
     - nbz4live.php-fpm
+    - zenoamaro.supervisord
     - f500.dumpall
   tasks:
   vars:
