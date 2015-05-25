@@ -1,13 +1,82 @@
 nginx_sites:
   default:
      - listen 80 default_server
-     - server_name _
-     - root "/usr/share/nginx/html"
-     - index index.html
-     - location ~ \.(php)$ {
-         try_files $uri =404;
-         fastcgi_pass unix:/var/run/php5-fpm/sock;
-         fastcgi_index index.php;
-         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+     - allow 10.0.0.129
+     - allow 127.0.0.1
+     - deny all
+     - location / {
+         deny all;
+       }
+     - location ~ ^/(status|ping)$ {
+         allow 127.0.0.1;
+         deny all;
+         fastcgi_pass unix://var/run/php5-fpm.sock;
+         fastcgi_param   SCRIPT_FILENAME     $document_root$fastcgi_script_name;
+         include fastcgi_params;       
+       }
+     - location ~ \.php$ {
+            fastcgi_pass    unix://var/run/php5-fpm.sock;
+            fastcgi_index   index.php;
+            fastcgi_param   SCRIPT_FILENAME     $document_root$fastcgi_script_name;
+            fastcgi_param   APP_ENV             production;
+            include         fastcgi_params;
+       }
+  freckles.io:
+     - listen 80
+     - server_name {{sites["site1"]["servername"]}}
+     - root /var/www/{{sites["site1"]["name"]}}/webdir
+     - index index.html index.php
+     - allow 10.0.0.129
+     - allow 127.0.0.1
+     - deny all
+     - access_log  /var/www/{{sites["site1"]["name"]}}/log/nginx_access.log
+     - error_log   /var/www/{{sites["site1"]["name"]}}/log/nginx_error.log
+     - location /search {
+         proxy_pass http://127.0.0.1:9200/;
+       }
+     - location ~ ^/(status|ping)$ {
+         allow 127.0.0.1;
+         deny all;
+         fastcgi_pass unix://var/run/php5-fpm.sock;
+         fastcgi_param   SCRIPT_FILENAME     $document_root$fastcgi_script_name;
          include fastcgi_params;
        }
+    # PHP handle through fastcgi
+     - location ~ \.php$ {
+            fastcgi_pass    unix://var/run/php5-fpm.sock;
+            fastcgi_index   index.php;
+            fastcgi_param   SCRIPT_FILENAME     $document_root$fastcgi_script_name;
+            fastcgi_param   APP_ENV             production;
+            include         fastcgi_params;
+       }
+
+#  frackles_es:
+#     - listen 80
+#     - server_name {% for item in site1 %}{{item.value1}}{% endfor %} 178.62.123.110 demo.freckles.io
+#     - root "/var/www/{% for item in site1 %}{{item.name}}{% endfor %}/webdir"
+#     - index index.html
+#     - location /search {
+#         proxy_pass http://127.0.0.1:9200/;
+#       }
+
+#server {
+#        listen          80;
+#        server_name     127.0.0.1 178.62.123.110 demo.freckles.io;
+#        index           index.htm index.html;
+#        root            /srv/frc-demo/frc-demo-web;
+#
+#        location /search {
+#                proxy_pass http://127.0.0.1:9200/;
+#        }
+#}
+#
+#server {
+#        listen          80;
+#        server_name     demo_es.freckles.io;
+#
+#        location / {
+#            proxy_pass http://127.0.0.1:9200/;
+#        }
+#}
+
+

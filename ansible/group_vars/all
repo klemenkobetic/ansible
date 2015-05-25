@@ -1,1 +1,8 @@
 ntp: ntp.ubuntu.com
+sites:
+  site1: 
+    name: "freckles.io"
+    servername: "freckles.io localhost 127.0.0.1 178.62.123.110 demo.freckles.io"
+#  site2: 
+#    name: es.freckles.io 
+#    servername: es.freckles.io demo_es.freckles.io

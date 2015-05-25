@@ -2,14 +2,19 @@
 #### vars folder
 #apt_cache_valid_time: 86400
 #
-#php_fpm_pools:
-# - name: www
-#   user: www-data
-#   group: www-data
-#   listen: /var/run/php5-fpm.sock
-#   chdir: /
+php_fpm_pools:
+ - name: www
+   user: www-data
+   group: www-data
+   listen: /var/run/php5-fpm.sock
+   chdir: /
+   listen.owner: www-data
+   listen.group: www-data
+
 #
-#php_fpm_pool_defaults:
+php_fpm_pool_defaults:
+   pm.status_path: "/status"
+   ping.path: "/ping"
 #  pm: dynamic
 #  pm.max_children: 5
 #  pm.start_servers: 2
@@ -22,9 +27,9 @@
 #php_fpm_yum_packages:
 #  - php-fpm
 
-#php_fpm_default_pool:
-#  delete: no
-#  name: www.conf
+php_fpm_default_pool:
+  delete: yes
+  name: www.conf
 
 #php_fpm_default_pool:
 #  delete: yes

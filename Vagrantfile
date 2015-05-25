@@ -15,7 +15,24 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  config.vm.define "test" do |test|
+    test.vm.network "public_network", bridge: "wlan1"
+    test.vm.provider "virtualbox" do |vbxTest, override|
+      override.vm.box = "ubuntu/trusty32"
+      vbxTest.memory = 1024
+      vbxTest.cpus = 2
+    end
+
+    test.vm.provision "ansible" do |ansTest|
+      ansTest.verbose = "v"
+      ansTest.sudo = true
+      ansTest.playbook = "./ansible/test.yml"
+      ansTest.groups = { "tests" => ["test"], "all_groups:children" => ["tests"] }
+    end
+  end
+
   config.vm.define "db" do |db|
+    db.vm.network "public_network", bridge: "wlan1"
     db.vm.provider "virtualbox" do |vbxDb, override|
       override.vm.box = "ubuntu/trusty32"
       vbxDb.memory = 1024
@@ -25,14 +42,14 @@ Vagrant.configure("2") do |config|
     db.vm.provision "ansible" do |ansDb|
       ansDb.verbose = "v"
       ansDb.sudo = true
-#      ansDb.sudo_user = "root"
-#      ansDb.ask_sudo_pass = false
       ansDb.playbook = "./ansible/dbservers.yml"
       ansDb.groups = { "dbservers" => ["db"], "all_groups:children" => ["dbservers"] }
-
+#      ansDb.sudo_user = "root"
+#      ansDb.ask_sudo_pass = false
 #      ansDb.extra_vars = { ansible_ssh_user: 'root' }
 #      ansDb.playbook = "./ansible/db.yml"
 #      ansDb.raw_arguments = "--limit @/home/klemen/default.retry"
     end
   end
+
 end
