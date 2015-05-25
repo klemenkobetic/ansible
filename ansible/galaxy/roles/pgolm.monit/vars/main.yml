@@ -55,7 +55,5 @@ monit_services:
     rules:
       - "if failed host 127.0.0.1 port 6379 then restart"
       - "if 5 restarts within 5 cycles then timeout"
-#      - "if failed port 6379 send "\"PING\r\n" expect "\+PONG\r\n" with timeout 1 seconds within 2 cycles then alert"
-#      - "if failed port 6379 send "SET monit_test_key alive\r\n" expect "\+OK" send "EXISTS monit_test_key\r\n" expect ":1" with timeout 1 seconds within 2 cycles then alert"
-
-
+      - "if failed port 6379 send \"PING\\r\\n\" expect \"\\+PONG\\r\\n\" with timeout 1 seconds within 2 cycles then alert"
+      - "if failed port 6379 send \"SET monit_test_key alive\\r\\n\" expect \"\\+OK\" send \"EXISTS monit_test_key\\r\\n\" expect \":1\" with timeout 1 seconds within 2 cycles then alert"
