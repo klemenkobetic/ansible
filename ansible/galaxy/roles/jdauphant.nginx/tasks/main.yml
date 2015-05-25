@@ -1,0 +1,5 @@
+---
+- name: create symlinks in /var/www/<page>/etc/
+  shell: cp -d /etc/nginx/sites-enabled/{{item.value.name}}.conf /var/www/{{item.value.name}}/etc/{{item.value.name}}.conf
+  with_dict: sites
+

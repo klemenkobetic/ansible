@@ -1,0 +1,61 @@
+---
+monit_webinterface_acl_rules:
+  - localhost
+  - 10.0.0.129
+monit_services:
+  - name: "nginx"
+    type: "process"
+    target: "/var/run/nginx.pid"
+    start: "/etc/init.d/nginx start"
+    stop: "/etc/init.d/nginx stop"
+    rules:
+      - "if children > 8 then restart"
+      - "if children < 1 then restart"
+      - "if loadavg(5min) greater than 8 for 5 cycles then stop"
+      - "if 5 restarts within 5 cycles then timeout"
+#      - "if failed port 80 protocol http then restart"
+#      -  "if failed host example.com port 80 protocol http then restart"
+  - name: "php5-fpm"
+    type: "process"
+    target: "/var/run/php5-fpm.pid"
+    start: "/usr/sbin/service php5-fpm start"
+    stop: "/usr/sbin/service php5-fpm stop"
+    rules:
+      - "if failed unixsocket /var/run/php5-fpm.sock for 2 cycles then restart"
+      - "if failed host 127.0.0.1 port 80 protocol http and request '/ping' with timeout 10 seconds for 2 cycles then restart"
+      - "if 5 restarts within 5 cycles then timeout"
+  - name: "localhost"
+    type: "system"
+    rules:
+      - "if loadavg (1min) > 2 then alert"
+      - "if loadavg (5min) > 2 then alert"
+      - "if memory usage > 75% then alert"
+      - "if cpu usage (user) > 70% for 8 cycles then alert"
+      - "if cpu usage (system) > 40% for 8 cycles then alert"
+      - "if cpu usage (wait) > 20%  for 8 cycles then alert"    
+  - name: "sshd"
+    type: "process"
+    target: "/var/run/sshd.pid"
+    start: "/etc/init.d/ssh start"
+    stop: "/etc/init.d/ssh stop"
+  - name: "disk-space"
+    type: "filesystem"
+    target: "/dev/sda1"
+    rules:
+      - "if space usage > 85% for 5 times within 15 cycles then alert"
+      - "if space usage > 95% for 5 times within 15 cycles then alert"
+      - "if inode usage > 70% for 5 times within 15 cycles then alert"
+      - "if inode usage > 80% for 5 times within 15 cycles then alert"
+      - "if inode usage > 95% for 5 times within 15 cycles then alert"
+  - name: "redis"
+    type: "process"
+    target: "/var/run/redis/6379.pid"
+    start: "/usr/sbin/service redis_6379 start"
+    stop: "/usr/sbin/service redis_6379 stop"
+    rules:
+      - "if failed host 127.0.0.1 port 6379 then restart"
+      - "if 5 restarts within 5 cycles then timeout"
+#      - "if failed port 6379 send "\"PING\r\n" expect "\+PONG\r\n" with timeout 1 seconds within 2 cycles then alert"
+#      - "if failed port 6379 send "SET monit_test_key alive\r\n" expect "\+OK" send "EXISTS monit_test_key\r\n" expect ":1" with timeout 1 seconds within 2 cycles then alert"
+
+

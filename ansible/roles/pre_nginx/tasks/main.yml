@@ -1,0 +1,28 @@
+---
+- name: create dirs in /var/www
+  file: path=/var/www/{{item.value.name}} state=directory owner=deploy group=www-data mode=0754
+  with_dict: sites
+
+- name: create dirs in /var/www/<page>/etc
+  file: path=/var/www/{{item.value.name}}/etc state=directory owner=root group=root mode=0754
+  with_dict: sites
+
+- name: create dirs in /var/www/<page>/log
+  file: path=/var/www/{{item.value.name}}/log state=directory owner=root group=www-data mode=0754
+  with_dict: sites
+
+- name: create logs in /var/www/<page>/log
+  file: path=/var/www/{{item.value.name}}/log/nginx_access.log state=touch owner=deploy group=www-data mode=0754
+  with_dict: sites
+
+- name: create logs in /var/www/<page>/log
+  file: path=/var/www/{{item.value.name}}/log/nginx_error.log state=touch owner=deploy group=www-data mode=0754
+  with_dict: sites
+
+- name: create dirs in /var/www/<page>/etc
+  file: path=/var/www/{{item.value.name}}/etc state=directory owner=root group=root mode=0754
+  with_dict: sites
+
+- name: create dirs in /var/www/<page>/webdir
+  file: path=/var/www/{{item.value.name}}/webdir state=directory owner=root group=www-data mode=0754
+  with_dict: sites
