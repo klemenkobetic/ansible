@@ -1,6 +1,11 @@
+DavidWittman.redis
+Stouts.elasticsearch
 Stouts.rabbitmq
 Stouts.redis
 nbz4live.php-fpm
 jdauphant.nginx
 Stouts.timezone 
 mivok0.users
+laggyluke.nodejs
+pgolm.monit
+f500.dumpall

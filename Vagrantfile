@@ -3,14 +3,16 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.define "web" do |web|
+    web.vm.network "public_network", bridge: "wlan1"
     web.vm.provider "virtualbox" do |vbxWeb|
       vbxWeb.memory = 1024
-      vbxWeb.cpus = 2
+      vbxWeb.cpus = 1
     end
   
     web.vm.provision "ansible" do |ansWeb|
-#      ansWeb.verbose = "vvvv"
+      ansWeb.verbose = "v"
       ansWeb.playbook = "./ansible/webservers.yml"
+      ansWeb.sudo = "true"
       ansWeb.groups = { "webservers" => ["web"], "all_groups:children" => ["webservers"] }
     end
   end
@@ -20,7 +22,7 @@ Vagrant.configure("2") do |config|
     test.vm.provider "virtualbox" do |vbxTest, override|
       override.vm.box = "ubuntu/trusty32"
       vbxTest.memory = 1024
-      vbxTest.cpus = 2
+      vbxTest.cpus = 1
     end
 
     test.vm.provision "ansible" do |ansTest|
@@ -36,7 +38,7 @@ Vagrant.configure("2") do |config|
     db.vm.provider "virtualbox" do |vbxDb, override|
       override.vm.box = "ubuntu/trusty32"
       vbxDb.memory = 1024
-      vbxDb.cpus = 2
+      vbxDb.cpus = 1
     end
 
     db.vm.provision "ansible" do |ansDb|
