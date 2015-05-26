@@ -1,0 +1,31 @@
+hostname: webserver1
+ntp: ntp.ubuntu.com
+sites:
+  site1: 
+    name: "freckles.io"
+    servername: "freckles.io localhost 127.0.0.1 178.62.123.110 demo.freckles.io"
+#  site2: 
+#    name: es.freckles.io 
+#    servername: es.freckles.io demo_es.freckles.io
+
+#include roles :
+hostname_enabled: True
+upgrade_enabled: True
+users_enabled: True
+packages_enabled: True
+timezone_enabled: True
+monit_enabled: True
+rabbitmq_enabled: False
+monit_rabbitmq_enabled: "{{rabbitmq_enabled}}"
+redis_enabled: False
+monit_redis_enabled: "{{redis_enabled}}"
+elasticsearch_enabled: False
+monit_elasticsearch_enabled: "{{elasticsearch_enabled}}"
+phpfpm_enabled: False
+monit_phpfpm_enabled: "{{phpfpm_enabled}}"
+nginx_enabled: False
+monit_nginx_enabled: "{{nginx_enabled}}"
+dumpall_enabled: True
+nodejs_enabled: True
+monit_nodejs_enabled: "{{nodejs_enabled}}"
+monit_services:

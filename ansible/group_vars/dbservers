@@ -1,0 +1,68 @@
+hostname: dbserver1
+ntp: ntp.ubuntu.com
+sites:
+  site1: 
+    name: "freckles.io"
+    servername: "freckles.io localhost 127.0.0.1 178.62.123.110 demo.freckles.io"
+#  site2: 
+#    name: es.freckles.io 
+#    servername: es.freckles.io demo_es.freckles.io
+
+#include roles (and also monit) :
+hostname_enabled: True
+upgrade_enabled: True
+users_enabled: True
+packages_enabled: True
+timezone_enabled: True
+monit_enabled: True
+rabbitmq_enabled: True
+monit_rabbitmq_enabled: "{{rabbitmq_enabled}}"
+redis_enabled: True
+monit_redis_enabled: "{{redis_enabled}}"
+elasticsearch_enabled: True
+monit_elasticsearch_enabled: "{{elasticsearch_enabled}}"
+phpfpm_enabled: True
+monit_phpfpm_enabled: "{{phpfpm_enabled}}"
+nginx_enabled: True
+monit_nginx_enabled: "{{nginx_enabled}}"
+dumpall_enabled: True
+
+monit_services:
+  - name: "elasticsearch"
+    type: "process"
+    target: "/var/run/elasticsearch.pid"
+    start: "/usr/sbin/service elasticsearch start"
+    stop: "/usr/sbin/service elasticsearch stop"
+    rules:
+      - "if failed host 127.0.0.1 port 9200 protocol http and request \"/\" with timeout 10 seconds for 3 cycles then restart"
+      - "if 3 restarts within 3 cycles then timeout"
+  - name: "nginx"
+    type: "process"
+    target: "/var/run/nginx.pid"
+    start: "/etc/init.d/nginx start"
+    stop: "/etc/init.d/nginx stop"
+    rules:
+      - "if children > 8 then restart"
+      - "if children < 1 then restart"
+      - "if loadavg(5min) greater than 8 for 5 cycles then stop"
+      - "if 5 restarts within 5 cycles then timeout"
+  - name: "php5-fpm"
+    type: "process"
+    target: "/var/run/php5-fpm.pid"
+    start: "/usr/sbin/service php5-fpm start"
+    stop: "/usr/sbin/service php5-fpm stop"
+    rules:
+      - "if failed unixsocket /var/run/php5-fpm.sock for 2 cycles then restart"
+      - "if failed host 127.0.0.1 port 80 protocol http and request '/ping' with timeout 10 seconds for 2 cycles then restart"
+      - "if 5 restarts within 5 cycles then timeout"
+  - name: "redis"
+    type: "process"
+    target: "/var/run/redis/6379.pid"
+    start: "/usr/sbin/service redis_6379 start"
+    stop: "/usr/sbin/service redis_6379 stop"
+    rules:
+      - "if failed host 127.0.0.1 port 6379 then restart"
+      - "if failed port 6379 send \"PING\\r\\n\" expect \"\\+PONG\\r\\n\" with timeout 1 seconds within 2 cycles then alert"
+      - "if failed port 6379 send \"SET monit_test_key alive\\r\\n\" expect \"\\+OK\" send \"EXISTS monit_test_key\\r\\n\" expect \":1\" with timeout 1 seconds within 2 cycles then alert"
+      - "if 5 restarts within 5 cycles then timeout"
+
