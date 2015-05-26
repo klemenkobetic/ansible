@@ -4,37 +4,58 @@
   pre_tasks:
     - name: Include variables for galaxy mivok0/users
       include_vars: ./galaxy/roles/mivok0.users/vars/main.yml
-    - name: Include variables for galaxy stouts/rabbitmq
+      when: users_enabled
+    - name: Include variables for galaxy Stouts/rabbitmq
       include_vars: ./galaxy/roles/Stouts.rabbitmq/vars/main.yml
-#    - name: Include variables for galaxy stouts/redis
-#      include_vars: ./galaxy/roles/Stouts.redis/vars/main.yml
+      when: rabbitmq_enabled
     - name: Include variables for galaxy jdauphant/nginx
       include_vars: ./galaxy/roles/jdauphant.nginx/vars/main.yml
+      when: nginx_enabled
     - name: Include variables for galaxy nbz4live/phpfpm
       include_vars: ./galaxy/roles/nbz4live.php-fpm/vars/main.yml
+      when: phpfpm_enabled
     - name: Include variables for galaxy f500/dumpall
       include_vars: ./galaxy/roles/f500.dumpall/vars/main.yml
+      when: dumpall_enabled
     - name: Include variables for galaxy Stouts/elasticsearch
       include_vars: ./galaxy/roles/Stouts.elasticsearch/vars/main.yml
+      when: elasticsearch_enabled
     - name: Include variables for galaxy DavidWittman/redis
       include_vars: ./galaxy/roles/DavidWittman.redis/vars/main.yml
+      when: redis_enabled
     - name: Include variables for galaxy pgolm.monit
       include_vars: ./galaxy/roles/pgolm.monit/vars/main.yml
+      when: monit_enabled
+    - debug: var=monit_services
   roles:
-    - hostname
-    - upgrade
-    - mivok0.users
-    - packages
-    - Stouts.timezone
-#    - Stouts.rabbitmq    
-    - DavidWittman.redis
-#    - Stouts.elasticsearch
-    - nbz4live.php-fpm
-    - pre_nginx
-    - jdauphant.nginx
-    - pgolm.monit
-    - f500.dumpall
+    - role: hostname
+      when: hostname_enabled
+    - role: upgrade
+      when: upgrade_enabled
+    - role: mivok0.users
+      when: users_enabled
+    - role: packages
+      when: packages_enabled
+    - role: Stouts.timezone
+      when: timezone_enabled
+    - role: Stouts.rabbitmq   
+      when: rabbitmq_enabled
+    - role: DavidWittman.redis
+      when: redis_enabled
+    - role: Stouts.elasticsearch
+      when: elasticsearch_enabled
+    - role: nbz4live.php-fpm
+      when: phpfpm_enabled
+    - role: pre_nginx
+      when: nginx_enabled
+    - role: jdauphant.nginx
+      when: nginx_enabled
+    - role: pgolm.monit
+      when: monit_enabled
+    - role: f500.dumpall
+      when: dumpall_enabled
   tasks:
     - include: ./galaxy/roles/jdauphant.nginx/tasks/main.yml
-  vars:
-  post_tasks:
+#  vars:
+#  vars_files:
+#  post_tasks:
