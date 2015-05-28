@@ -1,1 +1,24 @@
 hostname: test
+nginx_sites:
+  default:
+     - listen 80 default_server
+     - allow 10.0.0.129
+     - allow 127.0.0.1
+     - deny all
+     - location / {
+         deny all;
+       }
+     - location ~ ^/(status|ping)$ {
+         allow 127.0.0.1;
+         deny all;
+         fastcgi_pass unix://var/run/php5-fpm.sock;
+         fastcgi_param   SCRIPT_FILENAME     $document_root$fastcgi_script_name;
+         include fastcgi_params;
+       }
+     - location ~ \.php$ {
+            fastcgi_pass    unix://var/run/php5-fpm.sock;
+            fastcgi_index   index.php;
+            fastcgi_param   SCRIPT_FILENAME     $document_root$fastcgi_script_name;
+            fastcgi_param   APP_ENV             production;
+            include         fastcgi_params;
+       }

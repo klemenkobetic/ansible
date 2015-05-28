@@ -26,7 +26,6 @@
     - name: Include variables for galaxy pgolm.monit
       include_vars: ./galaxy/roles/pgolm.monit/vars/main.yml
       when: monit_enabled
-    - debug: var=monit_services
   roles:
     - role: hostname
       when: hostname_enabled
@@ -56,6 +55,8 @@
       when: dumpall_enabled
   tasks:
     - include: ./galaxy/roles/jdauphant.nginx/tasks/main.yml
+    - debug: var=monit_services
+    - debug: var=hash_behaviour
 #  vars:
 #  vars_files:
 #  post_tasks:

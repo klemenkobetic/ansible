@@ -1,42 +1,27 @@
 ---
-- hosts: test
+- hosts: tests
   sudo: true
   pre_tasks:
-#    - name: Include variables for galaxy mivok0/users
-#      include_vars: ./galaxy/roles/mivok0.users/vars/main.yml
-#    - name: Include variables for galaxy stouts/rabbitmq
-#      include_vars: ./galaxy/roles/Stouts.rabbitmq/vars/main.yml
-#    - name: Include variables for galaxy stouts/redis
-#      include_vars: ./galaxy/roles/Stouts.redis/vars/main.yml
-#    - name: Include variables for galaxy jdauphant/nginx
-#      include_vars: ./galaxy/roles/jdauphant.nginx/vars/main.yml
-#    - name: Include variables for galaxy nbz4live/phpfpm
-#      include_vars: ./galaxy/roles/nbz4live.php-fpm/vars/main.yml
-#    - name: Include variables for galaxy f500/dumpall
-#      include_vars: ./galaxy/roles/f500.dumpall/vars/main.yml
-#    - name: Include variables for galaxy Stouts/elasticsearch
-#      include_vars: ./galaxy/roles/Stouts.elasticsearch/vars/main.yml
-#    - name: Include variables for galaxy avanov/supervisord
-#      include_vars: ./galaxy/roles/avanov.supervisord/vars/main.yml
-#    - name: Include variables for galaxy DavidWittman/redis
-#      include_vars: ./galaxy/roles/DavidWittman.redis/vars/main.yml
+    file: path=/var/www/sites state=directory owner=www-data group=www-data mode=0777
+    file: path=/var/www/sites/default state=directory owner=www-data group=www-data mode=0777
+    file: path=/var/www/sites/default/files state=directory owner=www-data group=www-data mode=0777
+    copy: src=/var/www/default/sites/default/default.settings.php dest=/var/www/default/sites/default/settings.php owner=www-data group=www-data mode=0777
+    apt: name=php5-gd state=present
   roles:
-    - hostname
-    - upgrade
-    - mivok0.users
-    - packages
-    - Stouts.timezone
-#    - Stouts.rabbitmq
-#    - DavidWittman.redis
-#    - Stouts.elasticsearch
-#    - jdauphant.nginx
-#    - nbz4live.php-fpm
-#    - avanov.supervisord
+    - nbz4live.php-fpm
+    - thecarlhall.drush
+    - thecarlhall.drupal
+    - ANXS.mysql
     - f500.dumpall
   tasks:
-#    - include: ./galaxy/roles/avanov.supervisord/tasks/main.yml
-    - name: create fake 'nologin' shell
-      file: path=/home/vagrant/{{ sites["freckles.io"]["name"] }} state=touch owner=root group=sys mode=0555
   vars:
+    - php_fpm_pools:
+        - name: www
+          user: www-data
+          group: www-data
+          listen: /var/run/php5-fpm.sock
+          chdir: /
+          listen.owner: www-data
+          listen.group: www-data
   post_tasks:
 

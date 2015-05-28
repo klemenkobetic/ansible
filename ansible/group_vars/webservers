@@ -29,3 +29,27 @@ dumpall_enabled: True
 nodejs_enabled: True
 monit_nodejs_enabled: "{{nodejs_enabled}}"
 monit_services:
+  - name: "localhost"
+    type: "system"
+    rules:
+      - "if loadavg (1min) > 2 then alert"
+      - "if loadavg (5min) > 2 then alert"
+      - "if memory usage > 75% then alert"
+      - "if cpu usage (user) > 70% for 8 cycles then alert"
+      - "if cpu usage (system) > 40% for 8 cycles then alert"
+      - "if cpu usage (wait) > 20%  for 8 cycles then alert"
+  - name: "sshd"
+    type: "process"
+    target: "/var/run/sshd.pid"
+    start: "/etc/init.d/ssh start"
+    stop: "/etc/init.d/ssh stop"
+  - name: "disk-space"
+    type: "filesystem"
+    target: "/dev/sda1"
+    rules:
+      - "if space usage > 85% for 5 times within 15 cycles then alert"
+      - "if space usage > 95% for 5 times within 15 cycles then alert"
+      - "if inode usage > 70% for 5 times within 15 cycles then alert"
+      - "if inode usage > 80% for 5 times within 15 cycles then alert"
+      - "if inode usage > 95% for 5 times within 15 cycles then alert"
+
