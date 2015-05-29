@@ -1,0 +1,39 @@
+---
+- hosts: tests
+  sudo: true
+#  pre_tasks:
+#    file: path=/var/www/sites state=directory owner=www-data group=www-data mode=0777
+#    file: path=/var/www/sites/default state=directory owner=www-data group=www-data mode=0777
+#    file: path=/var/www/sites/default/files state=directory owner=www-data group=www-data mode=0777
+#    copy: src=/var/www/default/sites/default/default.settings.php dest=/var/www/default/sites/default/settings.php owner=www-data group=www-data mode=0777
+#    apt: name=php5-gd state=present
+  roles:
+#    - locale
+    - upgrade
+    - f500.dumpall
+    - zenoamaro.postgresql
+#    - nbz4live.php-fpm
+#    - thecarlhall.drush
+#    - thecarlhall.drupal
+#    - ANXS.mysql
+  tasks:
+  vars:
+    postgresql_listen_addresses:
+      - '*'
+    postgresql_authentication:
+      - type: host
+        user: all
+        database: all
+        address: '0.0.0.0/0'
+        method: trust
+#    - php_fpm_pools:
+#        - name: www
+#          user: www-data
+#          group: www-data
+#          listen: /var/run/php5-fpm.sock
+#          chdir: /
+#          listen.owner: www-data
+#          listen.group: www-data
+  post_tasks:
+  environment:
+    LC_ALL: "en_US.UTF-8"
