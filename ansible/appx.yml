@@ -8,7 +8,6 @@
 #    copy: src=/var/www/default/sites/default/default.settings.php dest=/var/www/default/sites/default/settings.php owner=www-data group=www-data mode=0777
 #    apt: name=php5-gd state=present
   roles:
-#    - locale
     - upgrade
     - f500.dumpall
     - zenoamaro.postgresql
