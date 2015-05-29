@@ -1,7 +1,8 @@
 - name: Add the OS specific varibles
   include_vars: "{{ ansible_os_family }}.yml"
 
-- name: Updating apt-get cache, then upgrading with apt-get
+- name: Updating apt-get cache
   apt: update_cache=yes
+- name: Upgrading with apt-get
   apt: upgrade="{{ upgrade['type'] }}"
 
