@@ -1,5 +1,5 @@
 ---
-- hosts: tests
+- hosts: g_appx
   sudo: true
 #  pre_tasks:
 #    file: path=/var/www/sites state=directory owner=www-data group=www-data mode=0777
@@ -8,6 +8,7 @@
 #    copy: src=/var/www/default/sites/default/default.settings.php dest=/var/www/default/sites/default/settings.php owner=www-data group=www-data mode=0777
 #    apt: name=php5-gd state=present
   roles:
+    - locale
     - upgrade
     - f500.dumpall
     - zenoamaro.postgresql
@@ -34,5 +35,17 @@
 #          listen.owner: www-data
 #          listen.group: www-data
   post_tasks:
-  environment:
-    LC_ALL: "en_US.UTF-8"
+#  environment:
+#    LANGUAGE: "en_US.UTF-8"
+#    LC_ALL: "en_US.UTF-8"
+#    LC_TIME: "en_US.UTF-8"
+#    LC_MONETARY: "en_US.UTF-8"
+#    LC_ADDRESS: "en_US.UTF-8"
+#    LC_TELEPHONE: "en_US.UTF-8"
+#    LC_NAME: "en_US.UTF-8"
+#    LC_MEASUREMENT: "en_US.UTF-8"
+#    LC_IDENTIFICATION: "en_US.UTF-8"
+#    LC_NUMERIC: "en_US.UTF-8"
+#    LC_PAPER: "en_US.UTF-8"
+#    LANG: "en_US.UTF-8"
+

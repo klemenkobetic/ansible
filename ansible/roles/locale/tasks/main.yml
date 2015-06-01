@@ -1,0 +1,98 @@
+# Ensure a locale exists.
+
+#- name: gen enUS
+#  locale_gen: name=en_US.UTF-8 state=present
+
+#- name: gen slSI
+#  locale_gen: name=sl_SI.UTF-8 state=present
+
+#- name: Install locales
+#  command: locale-gen
+
+#- name: dev locale
+#  action: command sudo update-locale LC_ALL=en_US.UTF-8
+
+- name: set default locale LC_ALL
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_ALL"
+    line="LC_ALL=\"en_US.UTF-8\""
+
+- name: set default locale LANGUAGE
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LANGUAGE"
+    line="LANGUAGE=\"en_US.UTF-8\""
+
+- name: set default locale LC_TIME
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_TIME"
+    line="LC_TIME=\"en_US.UTF-8\""
+
+- name: set default locale LC_TIME
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_TIME"
+    line="LC_TIME=\"en_US.UTF-8\""
+
+- name: set default locale LC_MONETARY
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_MONETARY"
+    line="LC_MONETARY=\"en_US.UTF-8\""
+
+- name: set default locale LC_ADDRESS
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_ADDRESS"
+    line="LC_ADDRESS=\"en_US.UTF-8\""
+
+- name: set default locale LC_TELEPHONE
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_TELEPHONE"
+    line="LC_TELEPHONE=\"en_US.UTF-8\""
+
+- name: set default locale LC_NAME
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_NAME"
+    line="LC_NAME=\"en_US.UTF-8\""
+
+- name: set default locale LC_MEASUREMENT
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_MEASUREMENT"
+    line="LC_MEASUREMENT=\"en_US.UTF-8\""
+
+- name: set default locale LC_IDENTIFICATION
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_IDENTIFICATION"
+    line="LC_IDENTIFICATION=\"en_US.UTF-8\""
+
+- name: set default locale LC_NUMERIC
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_NUMERIC"
+    line="LC_NUMERIC=\"en_US.UTF-8\""
+
+- name: set default locale LC_PAPER
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_PAPER"
+    line="LC_PAPER=\"en_US.UTF-8\""
+
+- name: set default locale LANG
+  sudo: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LANG"
+    line="LANG=\"en_US.UTF-8\""
+
+#- name: workaround to install postgresql with locale set
+#  shell: LC_ALL=$locale LANGUAGE=$locale LANG=$locale LC_COLLATE=$locale LC_CTYPE=$locale LC_MESSAGES=$locale LC_MONETARY=$locale LC_NUMERIC=$locale LC_TIME=$locale
+
+#- name: reconfigure locales enUS
+#  sudo: yes
+#  shell: dpkg-reconfigure locales en_US.UTF-8

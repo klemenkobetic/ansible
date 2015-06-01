@@ -20,9 +20,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "test" do |test|
     test.vm.network "public_network", bridge: "wlan1"
     test.vm.provider "virtualbox" do |vbxTest, override|
-      override.vm.box = "ubuntu/trusty32"
       vbxTest.memory = 1024
-      vbxTest.cpus = 1
+      vbxTest.cpus = 2
     end
 
     test.vm.provision "ansible" do |ansTest|
@@ -30,6 +29,21 @@ Vagrant.configure("2") do |config|
       ansTest.sudo = true
       ansTest.playbook = "./ansible/test.yml"
       ansTest.groups = { "tests" => ["test"], "all_groups:children" => ["tests"] }
+    end
+  end
+
+  config.vm.define "appx" do |appx|
+    appx.vm.network "public_network", bridge: "wlan1"
+    appx.vm.provider "virtualbox" do |vbxAppx, override|
+      vbxAppx.memory = 1024
+      vbxAppx.cpus = 2
+    end
+
+    appx.vm.provision "ansible" do |ansAppx|
+      ansAppx.verbose = "v"
+      ansAppx.sudo = true
+      ansAppx.playbook = "./ansible/appx.yml"
+      ansAppx.groups = { "g_appx" => ["appx"], }
     end
   end
 
